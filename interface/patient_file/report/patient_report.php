@@ -1,14 +1,4 @@
 <?php
-include_once("../../globals.php");
-include_once("$srcdir/lists.inc");
-include_once("$srcdir/acl.inc");
-include_once("$srcdir/forms.inc");
-//include_once("../../../ccr/createCCR.php");
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
 
 // get various authorization levels
 $auth_notes_a  = acl_check('encounters', 'notes_a');
@@ -343,11 +333,7 @@ function(){
 	
 	$(".viewCCD").click(
 	function() { 
-<<<<<<< Updated upstream
 		//alert('in viewCCD');
-=======
-		//alert('in submitCCR');
->>>>>>> Stashed changes
 		var ccrAction = document.getElementsByName('ccrAction');
 		ccrAction[0].value = 'viewccd';
 		top.restoreSession(); 
