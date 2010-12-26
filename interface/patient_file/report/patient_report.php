@@ -1,5 +1,10 @@
 <?php
 
+include_once("../../globals.php");
+include_once("$srcdir/lists.inc");
+include_once("$srcdir/acl.inc");
+include_once("$srcdir/forms.inc");
+
 // get various authorization levels
 $auth_notes_a  = acl_check('encounters', 'notes_a');
 $auth_notes    = acl_check('encounters', 'notes');
