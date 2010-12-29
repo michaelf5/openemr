@@ -24,14 +24,9 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-//require_once(dirname(__FILE__) . "/../../library/sql.inc");
-//require_once(dirname(__FILE__) . "/../../interface/globals.php");
-
 function getHeaderData() {
 	
 	global $pid;
-
-	$con = $GLOBALS['dbh'] or die("database connection fails");
 
 	$sql = " 
 		SELECT prescriptions.date_added,
@@ -53,7 +48,6 @@ function getHeaderData() {
 
 function getMedicationData() {
 	global $pid;
-	$con = $GLOBALS['dbh'] or die("databaseG connection fails");
 
 	$sql = " 
 		SELECT prescriptions.date_added ,
@@ -69,13 +63,12 @@ function getMedicationData() {
 		FROM prescriptions 
 		WHERE prescriptions.patient_id =  ".$pid;
 		
-	$result = mysql_query($sql);
+	$result = sqlStatement($sql);
 	return $result;
 }
 
 function getImmunizationData() {
 	global $pid;
-	$con = $GLOBALS['dbh'] or die("databaseG connection fails");
 	
 	$sql = " SELECT immunizations.administered_date,
 			immunizations.patient_id,
@@ -87,7 +80,7 @@ function getImmunizationData() {
 		FROM immunizations , list_options
 		WHERE immunizations.immunization_id = list_options.option_id and immunizations.patient_id = ".$pid." and list_id = 'immunizations' " ;
 	
-	$result = mysql_query($sql);
+	$result = sqlStatement($sql);
 	return $result;
 }
 
@@ -95,7 +88,6 @@ function getImmunizationData() {
 function getProcedureData() {
 
 	global $pid;
-	$con = $GLOBALS['dbh'] or die("databaseG connection fails");
 
 	$sql = " 
 	SELECT 
@@ -126,7 +118,7 @@ function getProcedureData() {
 	on form_encounter.provider_id = users.id
 	where lists.type = 'surgery' and lists.pid=".$pid;
 
-	$result = mysql_query($sql);
+	$result = sqlStatement($sql);
 	return $result;
 }
 
@@ -134,7 +126,6 @@ function getProcedureData() {
 function getProblemData() {
 
 	global $pid;
-	$con = $GLOBALS['dbh'] or die("databaseG connection fails");
 
 	$sql = " 
 	select fe.encounter, fe.reason, fe.provider_id, u.title, u.fname, u.lname, 
@@ -153,7 +144,7 @@ function getProblemData() {
 	on cd.code = SUBSTRING(l.diagnosis, LOCATE(':',l.diagnosis)+1)
 	where l.type = 'medical_problem' and l.pid=".$pid;
 		
-	$result = mysql_query($sql);
+	$result = sqlStatement($sql);
 	return $result;
 }
 
@@ -161,7 +152,6 @@ function getProblemData() {
 function getAlertData() {
 
 	global $pid;
-	$con = $GLOBALS['dbh'] or die("databaseG connection fails");
 
 	$sql = " 
 	select fe.reason, fe.provider_id, fe.facility_id, fe.encounter,
@@ -181,7 +171,7 @@ function getAlertData() {
 	on cd.code = SUBSTRING(l.diagnosis, LOCATE(':',l.diagnosis)+1)
 	where l.type = 'allergy' and l.pid=".$pid;
 		
-	$result = mysql_query($sql);
+	$result = sqlStatement($sql);
 	return $result;
 }
 
@@ -189,7 +179,6 @@ function getAlertData() {
 function getResultData() {
 
 	global $pid;
-	$con = $GLOBALS['dbh'] or die("databaseG connection fails");
 
 	$sql = " 
 	select date, pid, groupname, ankle_able_to_bear_weight_steps, ankle_x_ray_interpretation
@@ -203,14 +192,13 @@ function getResultData() {
 
 function getActorData() {
 	global $pid;
-	$con = $GLOBALS['dbh'] or die("databaseG connection fails");
 
 	$sql = " 
 	select fname, lname, DOB, sex, pid, street, city, state, postal_code, phone_contact
 	from patient_data
 	where pid=".$pid;
 		
-	$result = mysql_query($sql);
+	$result = sqlStatement($sql);
 	return $result;
 }
 

@@ -24,13 +24,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-require_once("sql/ccr_sql.inc");
+require_once(dirname(__FILE__) . "/../library/sql-ccr.inc");
 require_once("uuid.php");
 
 
 $result = getActorData();
-$row = sqlFetchArray($result);
-
+while ($row = sqlFetchArray($result)) {
 
 	$e_Actor = $ccr->createElement('Actor');
 	$e_Actors->appendChild($e_Actor);
@@ -147,6 +146,8 @@ $row = sqlFetchArray($result);
 
 	$e_ActorID = $ccr->createElement('ActorID', $authorID);
 	$e_Actor->appendChild($e_ActorID);
+
+	}
 
 ?>
 

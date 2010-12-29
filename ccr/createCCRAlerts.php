@@ -24,12 +24,14 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-require_once("sql/ccr_sql.inc");
+require_once(dirname(__FILE__) . "/../library/sql-ccr.inc");
 
 $result = getAlertData();
 $row = sqlFetchArray($result);
 
 do {
+
+//while ($row = sqlFetchArray($result)) {
 
 	$e_Alert = $ccr->createElement('Alert');
 	$e_Alerts->appendChild($e_Alert);
@@ -123,7 +125,8 @@ do {
 	$e_Text = $ccr->createElement('Text', 'None');
 	$e_Status->appendChild($e_Text);
 
-} while ($row = sqlFetchArray($result));
+	} while ($row = sqlFetchArray($result));
+	//}
 
 ?>
 

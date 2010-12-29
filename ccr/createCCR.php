@@ -24,8 +24,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
  
-require_once(dirname(__FILE__) . "/sql/ccr_sql.inc");
 require_once(dirname(__FILE__) . "/../interface/globals.php");
+require_once(dirname(__FILE__) . "/../library/sql-ccr.inc");
 require_once(dirname(__FILE__) . "/../library/sql.inc");
 
 ?>
@@ -41,144 +41,145 @@ function createCCR($action){
 	echo '<!--';
 
 	$result = getHeaderData();
-	$row = sqlFetchArray($result);
+	while ($row = sqlFetchArray($result)) {
 
-	$ccr = new DOMDocument('1.0','UTF-8');
-	$e_styleSheet = $ccr->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="ccr.xsl"');
-	$ccr->appendChild($e_styleSheet);
+	   $ccr = new DOMDocument('1.0','UTF-8');
+	   $e_styleSheet = $ccr->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="ccr.xsl"');
+	   $ccr->appendChild($e_styleSheet);
 
-	$e_ccr = $ccr->createElementNS('urn:astm-org:CCR', 'ContinuityOfCareRecord');
-	$ccr->appendChild($e_ccr);
+	   $e_ccr = $ccr->createElementNS('urn:astm-org:CCR', 'ContinuityOfCareRecord');
+	   $ccr->appendChild($e_ccr);
 
-	/////////////// Header
+	   /////////////// Header
 
-	$e_ccrDocObjID = $ccr->createElement('CCRDocumentObjectID', getUuid());
-	$e_ccr->appendChild($e_ccrDocObjID);
+	   $e_ccrDocObjID = $ccr->createElement('CCRDocumentObjectID', getUuid());
+	   $e_ccr->appendChild($e_ccrDocObjID);
 
-	$e_Language = $ccr->createElement('Language', 'English');
-	$e_ccr->appendChild($e_Language);
+	   $e_Language = $ccr->createElement('Language', 'English');
+	   $e_ccr->appendChild($e_Language);
 
-	$e_Version = $ccr->createElement('Version', 'V1.0');
-	$e_ccr->appendChild($e_Version);
+	   $e_Version = $ccr->createElement('Version', 'V1.0');
+	   $e_ccr->appendChild($e_Version);
 
-	$e_dateTime = $ccr->createElement('DateTime');
-	$e_ccr->appendChild($e_dateTime);
+	   $e_dateTime = $ccr->createElement('DateTime');
+	   $e_ccr->appendChild($e_dateTime);
 
-        $e_ExactDateTime = $ccr->createElement('ExactDateTime', date('Y-m-d\TH:i:s\Z'));
-	$e_dateTime->appendChild($e_ExactDateTime);
+           $e_ExactDateTime = $ccr->createElement('ExactDateTime', date('Y-m-d\TH:i:s\Z'));
+	   $e_dateTime->appendChild($e_ExactDateTime);
 
-	$e_patient = $ccr->createElement('Patient');
-	$e_ccr->appendChild($e_patient);
+	   $e_patient = $ccr->createElement('Patient');
+	   $e_ccr->appendChild($e_patient);
 
-	$e_ActorID = $ccr->createElement('ActorID', $row['patient_id']);
-	$e_patient->appendChild($e_ActorID);
-	
-	//Header From:
-	$e_From = $ccr->createElement('From');
-	$e_ccr->appendChild($e_From);
+	   $e_ActorID = $ccr->createElement('ActorID', $row['patient_id']);
+	   $e_patient->appendChild($e_ActorID);
+	   
+	   //Header From:
+	   $e_From = $ccr->createElement('From');
+	   $e_ccr->appendChild($e_From);
 
-	$e_ActorLink = $ccr->createElement('ActorLink');
-	$e_From->appendChild($e_ActorLink);
+	   $e_ActorLink = $ccr->createElement('ActorLink');
+	   $e_From->appendChild($e_ActorLink);
 
-	$e_ActorID = $ccr->createElement('ActorID', $authorID );
-	$e_ActorLink->appendChild($e_ActorID);
+	   $e_ActorID = $ccr->createElement('ActorID', $authorID );
+	   $e_ActorLink->appendChild($e_ActorID);
 
-	$e_ActorRole = $ccr->createElement('ActorRole');
-	$e_ActorLink->appendChild($e_ActorRole);
+	   $e_ActorRole = $ccr->createElement('ActorRole');
+	   $e_ActorLink->appendChild($e_ActorRole);
 
-	$e_Text = $ccr->createElement('Text', 'author');
-	$e_ActorRole->appendChild($e_Text);
-	
-	//Header To:	
-	$e_To = $ccr->createElement('To');
-	$e_ccr->appendChild($e_To);
+	   $e_Text = $ccr->createElement('Text', 'author');
+	   $e_ActorRole->appendChild($e_Text);
+	   
+	   //Header To:	
+	   $e_To = $ccr->createElement('To');
+	   $e_ccr->appendChild($e_To);
 
-        $e_ActorLink = $ccr->createElement('ActorLink');
-        $e_To->appendChild($e_ActorLink);
+           $e_ActorLink = $ccr->createElement('ActorLink');
+           $e_To->appendChild($e_ActorLink);
 
-        $e_ActorID = $ccr->createElement('ActorID', $row['patient_id']);
-        $e_ActorLink->appendChild($e_ActorID);
+           $e_ActorID = $ccr->createElement('ActorID', $row['patient_id']);
+           $e_ActorLink->appendChild($e_ActorID);
 
-        $e_ActorRole = $ccr->createElement('ActorRole');
-        $e_ActorLink->appendChild($e_ActorRole);
+           $e_ActorRole = $ccr->createElement('ActorRole');
+           $e_ActorLink->appendChild($e_ActorRole);
 
-        $e_Text = $ccr->createElement('Text', 'patient');
-        $e_ActorRole->appendChild($e_Text);
+           $e_Text = $ccr->createElement('Text', 'patient');
+           $e_ActorRole->appendChild($e_Text);
 
-	//Header Purpose:
-	$e_Purpose = $ccr->createElement('Purpose');
-	$e_ccr->appendChild($e_Purpose);
+	   //Header Purpose:
+	   $e_Purpose = $ccr->createElement('Purpose');
+	   $e_ccr->appendChild($e_Purpose);
 
-	$e_Description = $ccr->createElement('Description');
-	$e_Purpose->appendChild($e_Description);
+	   $e_Description = $ccr->createElement('Description');
+	   $e_Purpose->appendChild($e_Description);
 
-	$e_Text = $ccr->createElement('Text', 'Summary of patient information');
-	$e_Description->appendChild($e_Text);
+	   $e_Text = $ccr->createElement('Text', 'Summary of patient information');
+	   $e_Description->appendChild($e_Text);
 
-	$e_Body = $ccr->createElement('Body');
-	$e_ccr->appendChild($e_Body);
-	
-	/////////////// Problems
+	   $e_Body = $ccr->createElement('Body');
+	   $e_ccr->appendChild($e_Body);
+	   
+	   /////////////// Problems
 
-	$e_Problems = $ccr->createElement('Problems');
-	require_once("createCCRProblem.php");
-	$e_Body->appendChild($e_Problems);
+	   $e_Problems = $ccr->createElement('Problems');
+	   require_once("createCCRProblem.php");
+	   $e_Body->appendChild($e_Problems);
 
-	/////////////// Alerts
+	   /////////////// Alerts
 
-	$e_Alerts = $ccr->createElement('Alerts');
-	require_once("createCCRAlerts.php");
-	$e_Body->appendChild($e_Alerts);
+	   $e_Alerts = $ccr->createElement('Alerts');
+	   require_once("createCCRAlerts.php");
+	   $e_Body->appendChild($e_Alerts);
 
-	////////////////// Medication
+	   ////////////////// Medication
 
-	$e_Medications = $ccr->createElement('Medications');
-	require_once("createCCRMedication.php");
-	$e_Body->appendChild($e_Medications);
+	   $e_Medications = $ccr->createElement('Medications');
+	   require_once("createCCRMedication.php");
+	   $e_Body->appendChild($e_Medications);
 
-	///////////////// Immunization
+	   ///////////////// Immunization
 
-	$e_Immunizations = $ccr->createElement('Immunizations');
-	require_once("createCCRImmunization.php");
-	$e_Body->appendChild($e_Immunizations);
-
-
-	/////////////////// Results
-
-	$e_Results = $ccr->createElement('Results');
-	require_once("createCCRResult.php");
-	$e_Body->appendChild($e_Results);
+	   $e_Immunizations = $ccr->createElement('Immunizations');
+	   require_once("createCCRImmunization.php");
+	   $e_Body->appendChild($e_Immunizations);
 
 
-	/////////////////// Procedures
+	   /////////////////// Results
 
-	$e_Procedures = $ccr->createElement('Procedures');
-	require_once("createCCRProcedure.php");
-	$e_Body->appendChild($e_Procedures);
-
-	//////////////////// Footer
-
-//	$e_VitalSigns = $ccr->createElement('VitalSigns');
-//	$e_Body->appendChild($e_VitalSigns);
-
-	/////////////// Actors
-
-	$e_Actors = $ccr->createElement('Actors');
-	require_once("createCCRActor.php");
-	$e_ccr->appendChild($e_Actors);
+	   $e_Results = $ccr->createElement('Results');
+	   require_once("createCCRResult.php");
+	   $e_Body->appendChild($e_Results);
 
 
-	// save created CCR in file
-	
-	echo " \n action=".$action;
-	
-	
-	if ($action=="generate"){
-		gnrtCCR($ccr);
-	}
-	
-	if($action == "viewccd"){
-		viewCCD($ccr);
+	   /////////////////// Procedures
+
+	   $e_Procedures = $ccr->createElement('Procedures');
+	   require_once("createCCRProcedure.php");
+	   $e_Body->appendChild($e_Procedures);
+
+	   //////////////////// Footer
+
+	   // $e_VitalSigns = $ccr->createElement('VitalSigns');
+	   // $e_Body->appendChild($e_VitalSigns);
+
+	   /////////////// Actors
+
+	   $e_Actors = $ccr->createElement('Actors');
+	   require_once("createCCRActor.php");
+	   $e_ccr->appendChild($e_Actors);
+
+
+	   // save created CCR in file
+	   
+	   echo " \n action=".$action;
+	   
+	   
+	   if ($action=="generate"){
+	   	gnrtCCR($ccr);
+	   }
+	   
+	   if($action == "viewccd"){
+	   	viewCCD($ccr);
+	   }
 	}
 
 }

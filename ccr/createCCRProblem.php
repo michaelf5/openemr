@@ -24,11 +24,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-	require_once("sql/ccr_sql.inc");
+	require_once(dirname(__FILE__) . "/../library/sql-ccr.inc");
 
 	$result = getProblemData();
 	$row = sqlFetchArray($result);
 	$pCount =0;
+	//while ($row = sqlFetchArray($result)) {
 	
 	do {
 		
@@ -119,6 +120,7 @@
 		$e_HealthStatus->appendChild(sourceType($ccr, $authorID));
 	
 	} while ($row = sqlFetchArray($result));
+	//}
 
 	// complex type should go in different find and should be included in createCCR.php
 /*
