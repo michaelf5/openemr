@@ -48,11 +48,11 @@ function checkAll(check) {
 <br/><br/>
 <input type='hidden' name='ccrAction'>
 <!-- call to generate CCR document -->
-<input type="button" class="generateCCR" value="<?php xl(' View CCR','e'); ?>" />
+<input type="button" class="generateCCR" value="<?php xl('View CCR','e'); ?>" />
 <hr/>
 <span class='title'><?php xl('Continuity of Care Document','e'); ?></span>&nbsp;&nbsp;
 <br/><br/>
-<input type="button" class="viewCCD" value="<?php xl(' View CCD','e'); ?>" />
+<input type="button" class="viewCCD" value="<?php xl('View CCD','e'); ?>" />
 
 </form>
 <hr/>
