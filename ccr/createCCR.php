@@ -27,14 +27,21 @@
 require_once(dirname(__FILE__) . "/../interface/globals.php");
 require_once(dirname(__FILE__) . "/../library/sql-ccr.inc");
 require_once(dirname(__FILE__) . "/../library/sql.inc");
-
+	   require_once(dirname(__FILE__) . "/uuid.php");
+           require_once("createCCRProblem.php");
+           require_once("createCCRAlerts.php");
+           require_once("createCCRMedication.php");
+           require_once("createCCRImmunization.php");
+           require_once("createCCRResult.php");
+           require_once("createCCRProcedure.php");
+           require_once("createCCRActor.php");
 ?>
 
 <?php
 
 function createCCR($action){
 
-	require_once("uuid.php");
+	//require_once("uuid.php");
 	
 	$authorID = getUuid();
 	
@@ -121,39 +128,39 @@ function createCCR($action){
 	   /////////////// Problems
 
 	   $e_Problems = $ccr->createElement('Problems');
-	   require_once("createCCRProblem.php");
+	   //require_once("createCCRProblem.php");
 	   $e_Body->appendChild($e_Problems);
 
 	   /////////////// Alerts
 
 	   $e_Alerts = $ccr->createElement('Alerts');
-	   require_once("createCCRAlerts.php");
+	   //require_once("createCCRAlerts.php");
 	   $e_Body->appendChild($e_Alerts);
 
 	   ////////////////// Medication
 
 	   $e_Medications = $ccr->createElement('Medications');
-	   require_once("createCCRMedication.php");
+	   //require_once("createCCRMedication.php");
 	   $e_Body->appendChild($e_Medications);
 
 	   ///////////////// Immunization
 
 	   $e_Immunizations = $ccr->createElement('Immunizations');
-	   require_once("createCCRImmunization.php");
+	   //require_once("createCCRImmunization.php");
 	   $e_Body->appendChild($e_Immunizations);
 
 
 	   /////////////////// Results
 
 	   $e_Results = $ccr->createElement('Results');
-	   require_once("createCCRResult.php");
+	   //require_once("createCCRResult.php");
 	   $e_Body->appendChild($e_Results);
 
 
 	   /////////////////// Procedures
 
 	   $e_Procedures = $ccr->createElement('Procedures');
-	   require_once("createCCRProcedure.php");
+	   //require_once("createCCRProcedure.php");
 	   $e_Body->appendChild($e_Procedures);
 
 	   //////////////////// Footer
@@ -164,7 +171,7 @@ function createCCR($action){
 	   /////////////// Actors
 
 	   $e_Actors = $ccr->createElement('Actors');
-	   require_once("createCCRActor.php");
+	   //require_once("createCCRActor.php");
 	   $e_ccr->appendChild($e_Actors);
 
 
