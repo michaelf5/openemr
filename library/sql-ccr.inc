@@ -25,25 +25,9 @@
 //  ------------------------------------------------------------------------ //
 
 function getHeaderData() {
-	
-	global $pid;
 
-	$sql = " 
-		SELECT prescriptions.date_added,
-			prescriptions.patient_id,
-			prescriptions.start_date,
-			prescriptions.quantity,
-			prescriptions.interval,
-			prescriptions.note,
-			prescriptions.drug,
-			prescriptions.medication,
-			prescriptions.active,
-			prescriptions.provider_id 
-		FROM prescriptions 
-		WHERE prescriptions.patient_id = ".$pid;
-		
-	$result = sqlStatement($sql);
-	return $result;
+// Reserved for future use
+	
 }
 
 function getMedicationData() {
