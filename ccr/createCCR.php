@@ -169,7 +169,7 @@ function createCCR($action){
 		
 
 		$ss = new DOMDocument();
-		$ss->load("ccd/CCD.xsl");
+		$ss->load("ccd/cda.xsl");
 				
 		$xslt->importStyleSheet($ss);
 
